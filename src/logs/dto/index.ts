@@ -4,3 +4,4 @@
 
 export * from './read-logs.dto'
 export * from './status-vehicle.dto'
+export * from './update-logs.dto'

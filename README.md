@@ -29,8 +29,9 @@ This is a RESTful API built using NestJS that provides endpoints for managing pa
 
 - `GET /logs`: Retrieves logs for a given user.
 - `POST /logs/status-vehicle`: Logs a vehicle entry or exit event.
+- `PUT /logs/update-logs`: Updates a log.
 
-All endpoints require authentication and authorization.
+Two of them dont need authentication, but the others need it.
 The collections of endpoints are defined in collections folder.
 
 ### Database

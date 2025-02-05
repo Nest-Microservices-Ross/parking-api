@@ -76,8 +76,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"exec": [
+									""
+								],
 								"type": "text/javascript",
-								"exec": []
+								"packages": {}
 							}
 						}
 					],
@@ -105,7 +108,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{ _.base_url }}api/reservations/availability/?startDate=2025-02-05T02:47:56.519Z&endDate=2025-02-08T02:47:56.519Z",
+							"raw": "{{ _.base_url }}api/reservations/availability/",
 							"host": [
 								"{{ _.base_url }}api"
 							],
@@ -117,11 +120,13 @@
 							"query": [
 								{
 									"key": "startDate",
-									"value": "2025-02-05T02:47:56.519Z"
+									"value": "2025-02-05T02:47:56.519Z",
+									"disabled": true
 								},
 								{
 									"key": "endDate",
-									"value": "2025-02-08T02:47:56.519Z"
+									"value": "2025-02-08T02:47:56.519Z",
+									"disabled": true
 								}
 							]
 						}
@@ -310,6 +315,68 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "jwt",
+				"jwt": [
+					{
+						"key": "algorithm",
+						"value": "HS256",
+						"type": "string"
+					},
+					{
+						"key": "isSecretBase64Encoded",
+						"value": false,
+						"type": "boolean"
+					},
+					{
+						"key": "payload",
+						"value": "{}",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "headerPrefix",
+						"value": "Bearer",
+						"type": "string"
+					},
+					{
+						"key": "queryParamKey",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "header",
+						"value": "{}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -356,6 +423,128 @@
 							],
 							"path": [
 								"logs",
+								""
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-04-25T10:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2025-04-25T12:00:00Z",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": []
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": true,
+						"disableUrlEncoding": false,
+						"disableCookies": false
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ _.token }}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/10.3.0"
+							}
+						],
+						"url": {
+							"raw": "{{ _.base_url }}api/logs/",
+							"host": [
+								"{{ _.base_url }}api"
+							],
+							"path": [
+								"logs",
+								""
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-04-25T10:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2025-04-25T12:00:00Z",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": true,
+						"disableUrlEncoding": false,
+						"disableCookies": false
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ _.token }}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/10.3.0"
+							}
+						],
+						"url": {
+							"raw": "{{ _.base_url }}api/logs/delete-logs/",
+							"host": [
+								"{{ _.base_url }}api"
+							],
+							"path": [
+								"logs",
+								"delete-logs",
 								""
 							],
 							"query": [
@@ -925,6 +1114,11 @@
 		{
 			"key": " _.base_url ",
 			"value": "http://localhost:3000/",
+			"type": "default"
+		},
+		{
+			"key": " _.token ",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IlJvc25pZWwiLCJlbWFpbCI6InJvczg2OEB6aW1icmEuY29tIiwiY3JlYXRlZEF0IjoiMjAyNS0wMi0wNFQyMjozOTowNy4yMTBaIiwidXBkYXRlZEF0IjoiMjAyNS0wMi0wNFQyMjozOTowNy4yMTBaIiwicm9sZSI6ImFkbWluIiwicGhvbmUiOm51bGwsImlhdCI6MTczODc4OTUzNSwiZXhwIjoxNzM4Nzk2NzM1fQ.IaX5S9A-nMkRoAiMqJkuHwVkEw3b56mmMK3paDIGLME",
 			"type": "default"
 		}
 	]

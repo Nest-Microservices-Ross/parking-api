@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, Logger, OnModuleInit } from '@ne
 import { PrismaClient } from '@prisma/client';
 import { Action, EventType } from 'src/common/enum';
 import { LogsPrismaService } from 'src/common/services/logs/logs-prisma-services';
-import { ReadLogsDto, StatusVehicleDto } from './dto';
+import { ReadLogsDto, StatusVehicleDto, UpdateLogsDto } from './dto';
 
 
 /**
@@ -38,6 +38,46 @@ export class LogsService extends PrismaClient implements OnModuleInit{
   onModuleInit() {
     this.$connect();
     this.logger.log('Parking on');
+  }
+
+
+  /**
+   * @method updateLogs
+   * @description Updates a log in the database.
+   * @param {UpdateLogsDto} updateLogsDto DTO containing the log ID, user ID, event type, and reference ID to update.
+   * @returns {Promise<{ message: string }>} Success message.
+   */
+  async updateLogs(updateLogsDto: UpdateLogsDto): Promise<{ message: string; }> {
+    const { id, userId, TypeEvent, referenceId } = updateLogsDto;
+    try {
+      const log = await this.logsService.log.findUnique({
+        where: { id },
+      });
+      if (!log) {
+        throw new HttpException(
+          { message: 'Log not found' },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const structLogs: { userId?: number, TypeEvent?: EventType, referenceId?: string } = {};
+      if (userId !== undefined) { structLogs.userId = userId }
+      if (TypeEvent !== undefined) { structLogs.TypeEvent = TypeEvent }
+      if (referenceId !== undefined) { structLogs.referenceId = referenceId } 
+
+
+      await this.logsService.log.update({
+        where: { id },
+        data: structLogs,
+      });
+
+      return { message: `Log with id ${id} updated successfully` };
+    } catch (error) {
+      throw new HttpException(
+        { message: error.message },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
     /**
