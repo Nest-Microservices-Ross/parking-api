@@ -1,6 +1,6 @@
 
 import { LogsService } from './logs.service';
-import { Controller, Get, Post, Body, UseGuards, Query, Put, Delete, Param, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Query, Put } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators';
 import { AuthGuard, RolesGuard } from 'src/common/guards';
 import { ReadLogsDto, StatusVehicleDto, UpdateLogsDto } from './dto';
