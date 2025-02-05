@@ -501,69 +501,6 @@
 					"response": []
 				},
 				{
-					"name": "Delete Logs",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"followRedirects": true,
-						"disableUrlEncoding": false,
-						"disableCookies": false
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ _.token }}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "User-Agent",
-								"value": "insomnia/10.3.0"
-							}
-						],
-						"url": {
-							"raw": "{{ _.base_url }}api/logs/delete-logs/",
-							"host": [
-								"{{ _.base_url }}api"
-							],
-							"path": [
-								"logs",
-								"delete-logs",
-								""
-							],
-							"query": [
-								{
-									"key": "startDate",
-									"value": "2025-04-25T10:00:00Z",
-									"disabled": true
-								},
-								{
-									"key": "endDate",
-									"value": "2025-04-25T12:00:00Z",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Entry/Out Car",
 					"event": [
 						{
