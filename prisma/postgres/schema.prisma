@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_DB")
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  name             String
+  email            String        @unique
+  password         String
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  role             Role          @default(cliente)
+  phone            String?
+  reservations     Reservation[] @relation("ClientReservations")
+  reservationsMade Reservation[] @relation("EmployeeReservations")
+}
+
+model Reservation {
+  id               Int         @id @default(autoincrement())
+  reservationStart DateTime
+  reservationEnd   DateTime
+  reservedAt       DateTime    @default(now())
+  carType          String?
+  parkingSpotId    Int
+  clientId         Int
+  reservedById     Int?
+  deleted          Boolean     @default(false)
+  client           User        @relation("ClientReservations", fields: [clientId], references: [id])
+  parkingSpot      ParkingSpot @relation(fields: [parkingSpotId], references: [id])
+  reservedBy       User?       @relation("EmployeeReservations", fields: [reservedById], references: [id])
+}
+
+model ParkingSpot {
+  id           Int           @id @default(autoincrement())
+  spotNumber   String        @unique
+  isOccupied   Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  carType      String?
+  deleted      Boolean       @default(false)
+  reservations Reservation[]
+}
+
+enum Role {
+  cliente
+  empleado
+  admin
+}

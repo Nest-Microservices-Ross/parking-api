@@ -1,0 +1,35 @@
+datasource logs {
+  provider = "mongodb"
+  url      = env("MONGODB")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "mongodb/client"
+}
+
+model Log {
+  id          String       @id @default(auto()) @map("_id") @logs.ObjectId
+  timestamp   DateTime     @default(now())
+  eventType   LogEventType
+  deleted     Boolean      @default(false)
+  description String
+  userId      Int?
+  referenceId String?
+  metadata    Json?
+}
+
+enum LogEventType {
+  RESERVATION_CREATED
+  RESERVATION_UPDATED
+  RESERVATION_CONSULTED
+  RESERVATION_DELETED
+  RESERVATION_CANCELED
+  VEHICLE_ENTRY
+  VEHICLE_EXIT
+  SPOT_CREATED
+  SPOT_UPDATED
+  SPOT_CONSULTED
+  SPOT_DELETED
+  AVAILABILITY_CHECKED
+}

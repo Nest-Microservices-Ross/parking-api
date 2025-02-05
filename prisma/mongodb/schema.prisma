@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "mongodb/client"
+}
+
+datasource logs {
+  provider = "mongodb"
+  url      = env("MONGO_DB")
+}
+
+type LogMetadata {
+  carType          String?
+  clientId         Int?
+  reservationEnd   String?
+  reservationStart String?
+  spotNumber       String?
+  vehicleDetails   String?
+}
+
+model Log {
+  id          String      @id @default(auto()) @map("_id") @logs.ObjectId
+  description String
+  eventType   String
+  metadata    LogMetadata
+  referenceId String?
+  timestamp   DateTime    @logs.Date
+  userId      BigInt?
+}
+
+model logos {
+  id String @id @default(auto()) @map("_id") @logs.ObjectId
+}
