@@ -14,7 +14,7 @@ This is a RESTful API built using NestJS that provides endpoints for managing pa
 
 - `POST /parking/create`: Creates a new parking spot.
 - `PUT /parking/update`: Updates an existing parking spot.
-- `GET /parking/availability`: Checks the availability of parking spots.
+- `GET /parking/`: Checks the all parking spots.
 - `DEL /parking/delete`: Deletes a parking spot.
 
 #### Reservations
